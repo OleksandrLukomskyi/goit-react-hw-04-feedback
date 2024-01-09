@@ -1,50 +1,50 @@
-import { useState } from "react"
-import { Section } from "./Section/Section"
-
-// function name(params) {
-//   return [value, fn]
-// }
+import { useState } from 'react';
+import Section  from './Section/Section';
 
 const App = () => {
-  
-const [good, setGood] = useState(0)
-const [neutral, setNeutral] = useState(0)
-const [bad, setBad] = useState(0)
+  const [feedback, setFeedback] = useState({
+    good: 0,
+    neutral: 0,
+    bad: 0,
+  });
 
- 
+  const onLeaveFeedback = e => {
+    const option = e.currentTarget.name;
 
-//  useEffect(() => {
-//   console.log('render');
-//  })
+    setFeedback(prev => ({ ...prev, [option]: prev[option] + 1 }));
+  };
 
-const onLeaveFeedback = (e) => {
-  const feedback = e.currentTarget.name;
-  console.log(feedback);
-setFeedback(prevState => prevState[feedback] + 1); 
-      }
+  const countTotalFeedback = () => {
+    const { good, neutral, bad } = feedback;
+    const amount = good + neutral + bad;
+    return amount;
+  };
 
-
-const countTotalFeedback = () => {
-  const {good, neutral, bad} = feedback;
-const amount = good + neutral + bad
-return amount;
-}
-
-const countPositiveFeedbackPercentage = () => {
-  const totalFeedback = countTotalFeedback();
+  const countPositiveFeedbackPercentage = () => {
+    const totalFeedback = countTotalFeedback();
+    const { good } = feedback;
     if (totalFeedback === 0) {
-    return 0;
-  }
-  return Math.round((feedback.good/ totalFeedback) * 100);
+      return 0;
+    }
+    return Math.round((good / totalFeedback) * 100);
+  };
 
- }
-
-
+  const { good, neutral, bad } = feedback;
+  const total = countTotalFeedback();
+  const positivePercentage = countPositiveFeedbackPercentage();
 
   return (
-  <> 
-  <Section good={feedback.good} neutral={feedback.neutral} bad={feedback.bad} total={countTotalFeedback()} positivePercentage={countPositiveFeedbackPercentage()} onLeaveFeedback={onLeaveFeedback} />
-  </>)
-}
+    <>
+      <Section
+        good={good}
+        neutral={neutral}
+        bad={bad}
+        total={total}
+        positivePercentage={positivePercentage}
+        onLeaveFeedback={onLeaveFeedback}
+      />
+    </>
+  );
+};
 
-export default App
+export default App;

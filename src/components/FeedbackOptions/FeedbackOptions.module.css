@@ -1,0 +1,17 @@
+.button {
+   display: flex;
+font-size: 24px;
+padding: 5px;
+  background-color: aqua;
+  border: 2px solid black;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+  cursor: pointer;
+
+}
+
+.blocButton{
+   display: flex;
+    gap: 30px;
+}
+
